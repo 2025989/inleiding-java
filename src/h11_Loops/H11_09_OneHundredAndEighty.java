@@ -28,13 +28,13 @@ public class H11_09_OneHundredAndEighty extends Applet {
 		int y = getHeight();
 		int sz = (y-10)/amt;
 		for (int i = 1; i <= amt; i++) {
-			if ((i+6) % 7 == 0) {g.setColor(Color.red);}
-			if ((i+5) % 7 == 0) {g.setColor(Color.orange);}
-			if ((i+4) % 7 == 0) {g.setColor(Color.yellow);}
-			if ((i+3) % 7 == 0) {g.setColor(Color.green);}
-			if ((i+2) % 7 == 0) {g.setColor(Color.blue);}
-			if ((i+1) % 7 == 0) {g.setColor(Color.magenta);}
-			if ((i+0) % 7 == 0) {g.setColor(Color.pink);}
+			if ((i-1) % 7 == 0) {g.setColor(Color.red);}
+			if ((i-2) % 7 == 0) {g.setColor(Color.orange);}
+			if ((i-3) % 7 == 0) {g.setColor(Color.yellow);}
+			if ((i-4) % 7 == 0) {g.setColor(Color.green);}
+			if ((i-5) % 7 == 0) {g.setColor(Color.blue);}
+			if ((i-6) % 7 == 0) {g.setColor(Color.magenta);}
+			if ((i-7) % 7 == 0) {g.setColor(Color.pink);}
 			g.drawOval((x/2)-(sz*amt/2), 40+(y/2)-(sz*amt/2), (sz*i)-40, (sz*i)-40);
 		}
 	}
