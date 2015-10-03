@@ -3,19 +3,22 @@ package h11_Loops;
 import java.applet.Applet;
 import java.awt.Button;
 import java.awt.Graphics;
+import java.awt.Label;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class H11_Final_1_TablesInputOK extends Applet {
 
+	Label label = new Label("Geef de tafel van...");
 	TextField input = new TextField("", 15);
 	Button ok = new Button("OK");
 	long num = Long.MIN_VALUE;
 	int i = 1;
 	
 	public void init() {
-		setSize(400,400);
+		setSize(400, 400);
+		add(label);
 		add(input); input.addActionListener(new InputListener());
 		add(ok); ok.addActionListener(new InputListener());
 	}

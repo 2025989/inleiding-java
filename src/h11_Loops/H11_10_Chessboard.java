@@ -23,9 +23,9 @@ public class H11_10_Chessboard extends Applet {
 				if (iRow % 2 == 0 && iCol % 2 == 0) {g.setColor(Color.black);} // evenRow && evenCol
 				
 				g.fillRect((x-sz*8)/2+sz*(iCol-1), sz*iRow, sz, sz);
-				g.drawRect((x-sz*8)/2, sz, sz*8, sz*8);
 			}
 		}
+		g.drawRect((x-sz*8)/2, sz, sz*8, sz*8);
 	}
 
 }

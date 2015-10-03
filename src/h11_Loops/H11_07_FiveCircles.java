@@ -1,21 +1,45 @@
 package h11_Loops;
 
 import java.applet.Applet;
+import java.awt.Button;
 import java.awt.Graphics;
+import java.awt.Label;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class H11_07_FiveCircles extends Applet {
 
+	Label label = new Label("Hoeveel cirkels wil je zien?");
+	TextField input = new TextField("5", 5);
+	Button ok = new Button("OK");
+	int amt = Integer.parseInt(input.getText());
+	
 	public void init() {
-		setSize(210,210);
+		setSize(200, 200);
+		add(label);
+		add(input); input.addActionListener(new InputListener());
+		add(ok); ok.addActionListener(new InputListener());
 	}
 	
 	public void paint(Graphics g) {
 		int x = getWidth();
 		int y = getHeight();
-		int sz = getHeight()/30;
-		for (int i = 1; i <= 5; i++) {
-			g.drawOval(x/2-sz*i, y/2-sz*i, 1+sz*2*i, 1+sz*2*i);
+
+		for (int i = 1; i <= amt; i++) {
+			int tot = (y-85);		// size of outer circle
+			int sz = tot/amt*i;		// size of each individual circle
+			int dis = (tot-sz)/2;	// distance between outer circle and the smaller ones
+			g.drawOval((x/2-tot/2)+dis, 75+dis, sz, sz);
 		}
 	}
 
+	class InputListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			amt = Integer.parseInt(input.getText());
+			input.setText("");
+			repaint();
+		}
+	}
+	
 }

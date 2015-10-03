@@ -14,7 +14,7 @@ public class H11_Final_2_TablesNext extends Applet {
 	int i = 1;
 	
 	public void init() {
-		setSize(400,400);
+		setSize(400, 400);
 		add(ok); ok.addActionListener(new InputListener());
 	}
 	

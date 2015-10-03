@@ -6,7 +6,7 @@ import java.awt.Graphics;
 public class H11_04_Table3 extends Applet {
 
 	public void init() {
-		setSize(400,400);
+		setSize(400, 400);
 	}
 	
 	public void paint(Graphics g) {
