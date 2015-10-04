@@ -27,10 +27,10 @@ public class H11_08_FiftyShadesOfCircle extends Applet {
 		int y = getHeight();
 
 		for (int i = 1; i <= amt; i++) {
-			int tot = (y-50);		// size of outer circle
-			int sz = tot/amt*i;		// size of each individual circle
-			int dis = (tot-sz)/2;	// distance between outer circle and the smaller ones
-			g.drawOval((x/2-tot/2)+dis, 40+dis, sz, sz);
+			int out = (y-50);		// size of outer circle
+			int cur = out/amt*i;	// size of current circle
+			int dis = (out-cur)/2;	// distance between outer circle and current circle
+			g.drawOval((x/2-out/2)+dis, 40+dis, cur, cur);
 		}
 	}
 
