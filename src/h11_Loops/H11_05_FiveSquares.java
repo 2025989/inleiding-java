@@ -8,15 +8,15 @@ import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class H11_07_FiveCircles extends Applet {
+public class H11_05_FiveSquares extends Applet {
 
-	Label label = new Label("Hoeveel cirkels wil je zien?");
+	Label label = new Label("Hoeveel blokjes wil je zien?");
 	TextField input = new TextField("5", 5);
 	Button ok = new Button("OK");
-	int amt = Integer.parseInt(input.getText());
+	int amt = 5;
 	
 	public void init() {
-		setSize(200, 200);
+		setSize(215, 215);
 		add(label);
 		add(input); input.addActionListener(new InputListener());
 		add(ok); ok.addActionListener(new InputListener());
@@ -24,16 +24,13 @@ public class H11_07_FiveCircles extends Applet {
 	
 	public void paint(Graphics g) {
 		int x = getWidth();
-		int y = getHeight();
-
+		int sz = (getHeight()-75)/(amt+2);
+		
 		for (int i = 1; i <= amt; i++) {
-			int out = (y-85);		// size of outer circle
-			int cur = out/amt*i;	// size of current circle
-			int dis = (out-cur)/2;	// distance between outer circle and current circle
-			g.drawOval((x/2-out/2)+dis, 75+dis, cur, cur);
+			g.drawRect((x-sz*amt)/2+sz*(i-1), 75+sz*i, sz, sz);
 		}
 	}
-
+	
 	class InputListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			amt = Integer.parseInt(input.getText());
@@ -41,5 +38,5 @@ public class H11_07_FiveCircles extends Applet {
 			repaint();
 		}
 	}
-	
+
 }

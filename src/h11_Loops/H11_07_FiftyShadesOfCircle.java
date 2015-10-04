@@ -8,7 +8,7 @@ import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class H11_08_FiftyShadesOfCircle extends Applet {
+public class H11_07_FiftyShadesOfCircle extends Applet {
 
 	Label label = new Label("Hoeveel cirkels wil je zien?");
 	TextField input = new TextField("50", 5);

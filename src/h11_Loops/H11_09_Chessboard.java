@@ -4,7 +4,7 @@ import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class H11_10_Chessboard extends Applet {
+public class H11_09_Chessboard extends Applet {
 	
 	public void init() {
 		setSize(300, 300);

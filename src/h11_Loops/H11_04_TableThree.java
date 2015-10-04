@@ -3,7 +3,7 @@ package h11_Loops;
 import java.applet.Applet;
 import java.awt.Graphics;
 
-public class H11_04_Table3 extends Applet {
+public class H11_04_TableThree extends Applet {
 
 	public void init() {
 		setSize(400, 400);

@@ -9,7 +9,7 @@ import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class H11_09_OneHundredAndEighty extends Applet {
+public class H11_08_OneHundredAndEighty extends Applet {
 
 	Label label = new Label("Hoeveel cirkels wil je zien? (minimaal 100)");
 	TextField input = new TextField("180", 5);
