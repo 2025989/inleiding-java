@@ -7,7 +7,7 @@ import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class H11_Final_2_TablesNext extends Applet {
+public class H11_Final_2_NextTable extends Applet {
 
 	Button ok = new Button("OK");
 	int num = 1;

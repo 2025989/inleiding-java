@@ -8,7 +8,7 @@ import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class H11_Final_1_TablesInputOK extends Applet {
+public class H11_Final_1_TablesInput extends Applet {
 
 	Label label = new Label("Geef de tafel van...");
 	TextField input = new TextField("", 15);
