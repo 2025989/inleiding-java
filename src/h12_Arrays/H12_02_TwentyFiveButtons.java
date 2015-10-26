@@ -6,7 +6,6 @@ import java.awt.Button;
 public class H12_02_TwentyFiveButtons extends Applet {
 	
 	Button[] buttons = new Button[25];
-	String test = "";
 	
 	public void init() {
 		setSize(400, 150);

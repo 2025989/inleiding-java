@@ -3,18 +3,23 @@ package h11_Loops;
 import java.applet.Applet;
 import java.awt.Button;
 import java.awt.Graphics;
+import java.awt.Label;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class H11_Final_2_NextTable extends Applet {
+public class H11_Final_01_TablesInput extends Applet {
 
+	Label label = new Label("Geef de tafel van...");
+	TextField input = new TextField("", 15);
 	Button ok = new Button("OK");
-	int num = 1;
+	long num = Long.MIN_VALUE;
 	int i = 1;
 	
 	public void init() {
 		setSize(400, 400);
+		add(label);
+		add(input); input.addActionListener(new InputListener());
 		add(ok); ok.addActionListener(new InputListener());
 	}
 	
@@ -22,7 +27,7 @@ public class H11_Final_2_NextTable extends Applet {
 		int x = getWidth();
 		int y = getHeight();
 		
-		if (num <= 10) {
+		if (num > Long.MIN_VALUE) {
 			for (i = 1; i <= 10; i++) {
 				g.drawString(i +" × "+ num +" = "+ i*num, x/2-30, y/11*i+25);
 			}
@@ -31,8 +36,8 @@ public class H11_Final_2_NextTable extends Applet {
 	
 	class InputListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			num++;
-			if (num > 10) {num = 1;}
+			num = Long.parseLong(input.getText());
+			input.setText("");
 			repaint();
 		}
 	}
