@@ -23,7 +23,7 @@ public class H13_Final_02_Orchard extends Applet {
 	boolean[] isCut = new boolean[iSeason.length];
 	int appleBasket = 0;
 	double money = 1500;
-	double appleEuro = 1.0;
+	double appleEuro = (double)(int)((Math.random()+0.5)*1000)/1000;
 	int treePointer;
 	int labor;
 	
