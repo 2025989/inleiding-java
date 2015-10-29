@@ -12,12 +12,10 @@ import java.awt.event.ActionListener;
 public class H13_Final_02_Orchard extends Applet {
 	
 	Button season = new Button("Next season");
-	Label cutLabel = new Label("Cut a dead tree for € 500,- (row-col):");
-	Label plantLabel = new Label("Replant a cut tree for € 250,- (only during springtime) (row-col):");
 	Label sellLabel = new Label("Sell apples:");
-	TextField cut = new TextField("", 5);
-	TextField plant = new TextField("", 5);
 	TextField sell = new TextField("0", 5);
+	Button cut = new Button("Cut a dead tree for € 500,-");
+	Button plant = new Button("Replant a cut tree for € 250,- (only during springtime)");
 	int[] iSeason = new int[8*7];
 	double d; //shrink-factor "depth"
 	int treeCounter = 0;
@@ -33,15 +31,13 @@ public class H13_Final_02_Orchard extends Applet {
 		setSize(1280, 860);
 		add(season);
 		season.addActionListener(new SeasonListener());
-		add(cutLabel);
-		add(cut);
-		cut.addActionListener(new CutListener());
-		add(plantLabel);
-		add(plant);
-		plant.addActionListener(new PlantListener());
 		add(sellLabel);
 		add(sell);
 		sell.addActionListener(new SellListener());
+		add(cut);
+		cut.addActionListener(new CutListener());
+		add(plant);
+		plant.addActionListener(new PlantListener());
 		for (int i = 0; i < iSeason.length; i++) {
 			iSeason[i] = 1;
 			isDead[i] = false;
@@ -164,12 +160,10 @@ public class H13_Final_02_Orchard extends Applet {
 	
 	void searchDeadCut() {
 		for (int i = isDead.length-1; i >= 0; i--) {
-			if (isDead[i] == true) {cut.setText(((i+1)-(i+1)%7)/7+1 +"-"+ ((i+1)%7));}
-			if (isDead[i] == true && ((i+1)%7) == 0) {cut.setText(((i+1)-(i+1)%7)/7 +"-7");}
+			if (isDead[i] == true) {cut.setName(""+ i);}
 		}
 		for (int i = isDead.length-1; i >= 0; i--) {
-			if (isCut[i] == true) {plant.setText(((i+1)-(i+1)%7)/7+1 +"-"+ ((i+1)%7));}
-			if (isCut[i] == true && ((i+1)%7) == 0) {plant.setText(((i+1)-(i+1)%7)/7 +"-7");}
+			if (isCut[i] == true) {plant.setName(""+ i);}
 		}
 	}
 	
@@ -189,12 +183,12 @@ public class H13_Final_02_Orchard extends Applet {
 	
 	class CutListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			treePointer = ((Integer.parseInt(cut.getText().split("-")[0])-1)*7+Integer.parseInt(cut.getText().split("-")[1])-1);
+			treePointer = Integer.parseInt(cut.getName());
 			if (isDead[treePointer] == true && money >= 500) {
 				money -= 500;
 				isDead[treePointer] = false;
 				isCut[treePointer] = true;
-				cut.setText("");
+				cut.setName("");
 				searchDeadCut();
 				repaint();
 				labor++;
@@ -216,13 +210,13 @@ public class H13_Final_02_Orchard extends Applet {
 	
 	class PlantListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			treePointer = ((Integer.parseInt(plant.getText().split("-")[0])-1)*7+Integer.parseInt(plant.getText().split("-")[1])-1);
+			treePointer = Integer.parseInt(plant.getName());
 			if (isCut[treePointer] == true && iSeason[treePointer]%4 == 1 && money >= 250) {
 				money -= 250;
 				isDead[treePointer] = false;
 				isCut[treePointer] = false;
 				iSeason[treePointer] = 1;
-				plant.setText("");
+				plant.setName("");
 				searchDeadCut();
 				repaint();
 			}
@@ -235,6 +229,7 @@ public class H13_Final_02_Orchard extends Applet {
 				appleBasket -= Integer.parseInt(sell.getText());
 				money += Integer.parseInt(sell.getText())*appleEuro;
 				sell.setText("");
+				searchDeadCut();
 				repaint();
 			}
 		}
