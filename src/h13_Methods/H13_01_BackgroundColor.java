@@ -4,6 +4,7 @@ import java.applet.Applet;
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -37,9 +38,9 @@ public class H13_01_BackgroundColor extends Applet {
 	
 	class ColorListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			text = ""+ e.getSource();
-			text = text.split("=")[1];
-			text = text.split("]")[0];
+			Button src = (Button)e.getSource();
+			setBackground(src.getBackground());
+			text = src.getLabel();
 			repaint();
 		}
 	}

@@ -4,54 +4,224 @@ import java.applet.Applet;
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Label;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class H13_Final_02_Orchard extends Applet {
 	
-	Button season = new Button("Volgende seizoen");
-	int iSeason = 1;
+	Button season = new Button("Next season");
+	Label cutLabel = new Label("Cut a dead tree for € 500,- (row-col):");
+	Label plantLabel = new Label("Replant a cut tree for € 250,- (only during springtime) (row-col):");
+	Label sellLabel = new Label("Sell apples:");
+	TextField cut = new TextField("", 5);
+	TextField plant = new TextField("", 5);
+	TextField sell = new TextField("0", 5);
+	int[] iSeason = new int[8*7];
+	double d; //shrink-factor "depth"
+	int treeCounter = 0;
+	boolean[] isDead = new boolean[iSeason.length];
+	boolean[] isCut = new boolean[iSeason.length];
+	int appleBasket = 0;
+	double money = 0;
+	double appleEuro = 1.0;
+	int treePointer;
+	int labor;
 	
 	public void init() {
 		setSize(1280, 860);
 		add(season);
 		season.addActionListener(new SeasonListener());
+		add(cutLabel);
+		add(cut);
+		cut.addActionListener(new CutListener());
+		add(plantLabel);
+		add(plant);
+		plant.addActionListener(new PlantListener());
+		add(sellLabel);
+		add(sell);
+		sell.addActionListener(new SellListener());
+		for (int i = 0; i < iSeason.length; i++) {
+			iSeason[i] = 1;
+			isDead[i] = false;
+			isCut[i] = false;
+		}
 	}
 	
 	public void paint(Graphics g) {
 		int x = getWidth();
 		int y = 700;
 		
-		for (int iRow = 1; iRow <= 6; iRow++) {
+		for (int iRow = 1; iRow <= iSeason.length/7; iRow++) {
 			for (int iCol = -3; iCol <= 3; iCol++) {
-				drawTree(g, x/2-iCol*drawTree(g, x/2, y), y);
+				drawTree(g, (int)(x/2+iCol*rowHeight(x/2, y)*0.95), y);
+				treeCounter++;
 			}
-			y -= drawTree(g, x/2, y) + 10;
+			y -= rowHeight(x/2, y) + 10;
 		}
+		g.setColor(Color.black);
+		g.drawString("Apples: "+ appleBasket, 40, 75);
+		if (money == (int) money) {g.drawString("Money: € "+ String.format("%.0f"+ ",-", money), 40, 100);}
+		else {g.drawString("Money: € "+ String.format("%.2f", money), 40, 100);}
+		g.drawString("Apple stock price: "+ String.format("%.3f", appleEuro) +" EUR", 40, 125);
+		treeCounter = 0;
 	}
 	
-	int drawTree(Graphics g, int x, int y) {
-		int d = y/150;
-		int[] xPoints = {x, x+d, x-d*8, x+d*2, x+d*3, x+d*4, x+d*14, x+d*4, x+d*6};
-		int[] yPoints = {y, y-d*14, y-d*34, y-d*18, y-d*36, y-d*25, y-d*34, y-d*22, y};
-		g.setColor(new Color(185, 75, 5));
-		g.fillPolygon(xPoints, yPoints, 9);
-		if (iSeason%4 == 1) {g.setColor(new Color(105, 255, 40));}
-		if (iSeason%4 == 2) {g.setColor(new Color(225, 220, 20));}
-		if (iSeason%4 == 3) {g.setColor(new Color(235, 80, 0));}
-		if (iSeason%4 != 0) {
-			g.fillOval(x-d*14, y-d*39, d*17, d*13);
-			g.fillOval(x-d*3, y-d*40, d*15, d*12);
-			g.fillOval(x+d*4, y-d*39, d*15, d*11);
+	int rowHeight(int x, int y) {
+		d = y/(double)(150); //shrink-factor "depth"
+		int rowHeight = (int)(d*40);
+		return rowHeight;
+	}
+	
+	void drawTree(Graphics g, int x, int y) {
+		if (iSeason[treeCounter] <= 20) {d = d/20*iSeason[treeCounter];}
+		if (iSeason[treeCounter] > 20 && iSeason[treeCounter]%4 == 0 && isCut[treeCounter] == false && Math.random() < 0.05) {isDead[treeCounter] = true;}
+		if (isDead[treeCounter] == true) {
+			int[] xPoints = {x, (int)(x-d*3), (int)(x-d*2), (int)(x-d*11), (int)(x-d*1), x, (int)(x+d), (int)(x+d*11), (int)(x+d), (int)(x+d*3)};
+			int[] yPoints = {y, y, (int)(y-d*14), (int)(y-d*34), (int)(y-d*18), (int)(y-d*36), (int)(y-d*25), (int)(y-d*34), (int)(y-d*22), y};
+			g.setColor(new Color(105, 55, 25));
+			g.fillPolygon(xPoints, yPoints, 10);
 		}
-		int sz = d*40;
-		return sz;
+		else if (isCut[treeCounter] == true) {
+			int[] xPoints = {x, (int)(x-d*3), (int)(x-d*2), (int)(x+d*2), (int)(x+d*3)};
+			int[] yPoints = {y, y, (int)(y-d*5), (int)(y-d*5), y};
+			g.setColor(new Color(105, 55, 25));
+			g.fillPolygon(xPoints, yPoints, 5);
+		}
+		else {
+			//tree trunk
+			int[] xPoints = {x, (int)(x-d*3), (int)(x-d*2), (int)(x-d*11), (int)(x-d*1), x, (int)(x+d), (int)(x+d*11), (int)(x+d), (int)(x+d*3)};
+			int[] yPoints = {y, y, (int)(y-d*14), (int)(y-d*34), (int)(y-d*18), (int)(y-d*36), (int)(y-d*25), (int)(y-d*34), (int)(y-d*22), y};
+			g.setColor(new Color(185, 75, 5));
+			g.fillPolygon(xPoints, yPoints, 10);
+			
+			//foliage
+			if (iSeason[treeCounter]%4 != 0) {
+				int leaf = 0;
+				if (iSeason[treeCounter]%4 == 1) {leaf = 20;}
+				if (iSeason[treeCounter]%4 == 2) {leaf = 17;}
+				if (iSeason[treeCounter]%4 == 3) {leaf = 12;}
+				for (int i = 0; i < leaf; i++) {
+					if (iSeason[treeCounter]%4 == 1) {g.setColor(new Color((int)(Math.random()*50+80), (int)(Math.random()*25+230), (int)(Math.random()*50+15)));}
+					if (iSeason[treeCounter]%4 == 2) {
+						g.setColor(new Color((int)(Math.random()*50+200), (int)(Math.random()*50+195), (int)(Math.random()*45)));
+						if (Math.random() < 0.4) {g.setColor(new Color((int)(Math.random()*50+80), (int)(Math.random()*25+230), (int)(Math.random()*50+15)));} //spring leaves
+					}
+					if (iSeason[treeCounter]%4 == 3) {
+						g.setColor(new Color((int)(Math.random()*40+210), (int)(Math.random()*50+55), (int)(Math.random()*25)));
+						if (Math.random() < 0.25) {g.setColor(new Color((int)(Math.random()*50+200), (int)(Math.random()*50+195), (int)(Math.random()*45)));} //summer leaves
+						if (Math.random() < 0.01) {g.setColor(new Color((int)(Math.random()*50+80), (int)(Math.random()*25+230), (int)(Math.random()*50+15)));} //spring leaves
+					}
+					int xRan = (int)(Math.random()*(d*10));
+					int yRan = (int)(Math.random()*(d*10));
+					g.fillOval((int)(x-d*17)+xRan, (int)(y-d*39)+yRan, (int)(d*6), (int)(d*5));
+					
+					xRan = (int)(Math.random()*(d*7));
+					yRan = (int)(Math.random()*(d*7));
+					g.fillOval((int)(x-d*6)+xRan, (int)(y-d*40)+yRan, (int)(d*6), (int)(d*5));
+					
+					xRan = (int)(Math.random()*(d*11));
+					yRan = (int)(Math.random()*(d*9));
+					g.fillOval((int)(x+d)+xRan, (int)(y-d*39)+yRan, (int)(d*6), (int)(d*5));
+				}
+			}
+			//autumn&winter: leaves on the ground
+			if (iSeason[treeCounter]%4 == 3 || iSeason[treeCounter]%4 == 0) {
+				g.setColor(new Color(235, 80, 0));
+				int rLeaf = (int)(Math.random()*(iSeason[treeCounter]%4+1)*5);
+				for (int i = 0; i < rLeaf; i++) {
+					int xRan = (int)(Math.random()*(d*30+7));
+					g.fillOval((int)(x-d*17)+xRan, (int)(y-d), (int)(d*2), (int)(d));
+				}
+			}
+			
+			//apples
+			if (iSeason[treeCounter] > 20) {
+				if (iSeason[treeCounter]%4 == 1) {g.setColor(new Color(50, 205, 50));}
+				if (iSeason[treeCounter]%4 == 2) {g.setColor(new Color(225, 125, 0));}
+				if (iSeason[treeCounter]%4 == 3) {g.setColor(new Color(255, 0, 0));}
+				if (iSeason[treeCounter]%4 != 0) {
+					int rApple = (int)(Math.random()*13+2*(iSeason[treeCounter]%4));
+					for (int i = 0; i < rApple; i++) {
+						int xRan = (int)(Math.random()*(d*29));
+						int yRan = (int)(Math.random()*(d*9));
+						g.fillOval((int)(x-d*16)+xRan, (int)(y-d*38)+yRan, (int)(d*2), (int)(d*2));
+					}
+				}
+				//autumn: apples on the ground
+				if (iSeason[treeCounter]%4 == 3) {
+					g.setColor(new Color(255, 0, 0));
+					int rApple = (int)(Math.random()*5+2);
+					for (int i = 0; i < rApple; i++) {
+						int xRan = (int)(Math.random()*(d*30+7));
+						g.fillOval((int)(x-d*17)+xRan, (int)(y-d*2), (int)(d*2), (int)(d*2));
+					}
+				}
+			}
+		}
 	}
 	
 	class SeasonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			iSeason++;
+			for (int i = 0; i < iSeason.length; i++) {
+				iSeason[i]++;
+				int rApple = (int)(Math.random()*13+2*(iSeason[treeCounter]%4));
+				if (iSeason[i] > 20 && iSeason[i]%4 == 3) {appleBasket += rApple;}
+			}
+			sell.setText(""+ appleBasket);
+			appleEuro = (double)(int)((Math.random()+0.5)*1000)/1000;
 			repaint();
+		}
+	}
+	
+	class CutListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			treePointer = ((Integer.parseInt(cut.getText().split("-")[0])-1)*7+Integer.parseInt(cut.getText().split("-")[1])-1);
+			if (isDead[treePointer] == true && money >= 500) {
+				money -= 500;
+				isDead[treePointer] = false;
+				isCut[treePointer] = true;
+				cut.setText("");
+				repaint();
+				labor++;
+				if (labor > 3 && Math.random() < 0.5) {
+					for (int i = 0; i < iSeason.length; i++) {
+						iSeason[i]++;
+						int rApple = (int)(Math.random()*13+2*(iSeason[treeCounter]%4));
+						if (iSeason[treeCounter] > 20 && iSeason[treeCounter]%4 == 3) {appleBasket += rApple;}
+					}
+					sell.setText(""+ appleBasket);
+					appleEuro = (double)(int)((Math.random()+0.5)*1000)/1000;
+					repaint();
+					labor = 0;
+				}
+			}
+		}
+	}
+	
+	class PlantListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			treePointer = ((Integer.parseInt(plant.getText().split("-")[0])-1)*7+Integer.parseInt(plant.getText().split("-")[1])-1);
+			if (isCut[treePointer] == true && iSeason[treePointer]%4 == 1 && money >= 250) {
+				money -= 250;
+				isDead[treePointer] = false;
+				isCut[treePointer] = false;
+				iSeason[treePointer] = 1;
+				plant.setText("");
+				repaint();
+			}
+		}
+	}
+	
+	class SellListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (Integer.parseInt(sell.getText()) <= appleBasket) {
+				appleBasket -= Integer.parseInt(sell.getText());
+				money += Integer.parseInt(sell.getText())*appleEuro;
+				sell.setText("");
+				repaint();
+			}
 		}
 	}
 	
