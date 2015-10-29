@@ -162,6 +162,17 @@ public class H13_Final_02_Orchard extends Applet {
 		}
 	}
 	
+	void searchDeadCut() {
+		for (int i = isDead.length-1; i >= 0; i--) {
+			if (isDead[i] == true) {cut.setText(((i+1)-(i+1)%7)/7+1 +"-"+ ((i+1)%7));}
+			if (isDead[i] == true && ((i+1)%7) == 0) {cut.setText(((i+1)-(i+1)%7)/7 +"-7");}
+		}
+		for (int i = isDead.length-1; i >= 0; i--) {
+			if (isCut[i] == true) {plant.setText(((i+1)-(i+1)%7)/7+1 +"-"+ ((i+1)%7));}
+			if (isCut[i] == true && ((i+1)%7) == 0) {plant.setText(((i+1)-(i+1)%7)/7 +"-7");}
+		}
+	}
+	
 	class SeasonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			for (int i = 0; i < iSeason.length; i++) {
@@ -171,6 +182,7 @@ public class H13_Final_02_Orchard extends Applet {
 			}
 			sell.setText(""+ appleBasket);
 			appleEuro = (double)(int)((Math.random()+0.5)*1000)/1000;
+			searchDeadCut();
 			repaint();
 		}
 	}
@@ -183,6 +195,7 @@ public class H13_Final_02_Orchard extends Applet {
 				isDead[treePointer] = false;
 				isCut[treePointer] = true;
 				cut.setText("");
+				searchDeadCut();
 				repaint();
 				labor++;
 				if (labor > 3 && Math.random() < 0.5) {
@@ -193,6 +206,7 @@ public class H13_Final_02_Orchard extends Applet {
 					}
 					sell.setText(""+ appleBasket);
 					appleEuro = (double)(int)((Math.random()+0.5)*1000)/1000;
+					searchDeadCut();
 					repaint();
 					labor = 0;
 				}
@@ -209,6 +223,7 @@ public class H13_Final_02_Orchard extends Applet {
 				isCut[treePointer] = false;
 				iSeason[treePointer] = 1;
 				plant.setText("");
+				searchDeadCut();
 				repaint();
 			}
 		}
