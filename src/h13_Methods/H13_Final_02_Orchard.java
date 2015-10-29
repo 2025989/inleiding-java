@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 public class H13_Final_02_Orchard extends Applet {
 	
 	Button season = new Button("Next season");
-	Label sellLabel = new Label("Sell apples:");
+	Button sellButton = new Button("Sell apples:");
 	TextField sell = new TextField("0", 5);
 	Button cut = new Button("Cut a dead tree for € 500,-");
 	Button plant = new Button("Replant a cut tree for € 250,- (only during springtime)");
@@ -31,7 +31,8 @@ public class H13_Final_02_Orchard extends Applet {
 		setSize(1280, 860);
 		add(season);
 		season.addActionListener(new SeasonListener());
-		add(sellLabel);
+		add(sellButton);
+		sellButton.addActionListener(new SellListener());
 		add(sell);
 		sell.addActionListener(new SellListener());
 		add(cut);
@@ -228,7 +229,6 @@ public class H13_Final_02_Orchard extends Applet {
 	
 	class SellListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			searchDeadCut();
 			if (Integer.parseInt(sell.getText()) <= appleBasket) {
 				appleBasket -= Integer.parseInt(sell.getText());
 				money += Integer.parseInt(sell.getText())*appleEuro;
