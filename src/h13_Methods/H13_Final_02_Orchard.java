@@ -138,7 +138,7 @@ public class H13_Final_02_Orchard extends Applet {
 				if (iSeason[treeCounter]%4 == 2) {g.setColor(new Color(225, 125, 0));}
 				if (iSeason[treeCounter]%4 == 3) {g.setColor(new Color(255, 0, 0));}
 				if (iSeason[treeCounter]%4 != 0) {
-					int rApple = (int)(Math.random()*13+2*(iSeason[treeCounter]%4));
+					int rApple = (int)(Math.random()*16+2*(iSeason[treeCounter]%4));
 					for (int i = 0; i < rApple; i++) {
 						int xRan = (int)(Math.random()*(d*29));
 						int yRan = (int)(Math.random()*(d*9));
@@ -165,16 +165,17 @@ public class H13_Final_02_Orchard extends Applet {
 		for (int i = isDead.length-1; i >= 0; i--) {
 			if (isCut[i] == true) {plant.setName(""+ i);}
 		}
+		sell.setText(""+ appleBasket);
 	}
 	
 	class SeasonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			searchDeadCut();
 			for (int i = 0; i < iSeason.length; i++) {
 				iSeason[i]++;
-				int rApple = (int)(Math.random()*13+2*(iSeason[treeCounter]%4));
+				int rApple = (int)(Math.random()*16+2*(iSeason[treeCounter]%4));
 				if (iSeason[i] > 20 && iSeason[i]%4 == 3) {appleBasket += rApple;}
 			}
-			sell.setText(""+ appleBasket);
 			appleEuro = (double)(int)((Math.random()+0.5)*1000)/1000;
 			searchDeadCut();
 			repaint();
@@ -183,6 +184,7 @@ public class H13_Final_02_Orchard extends Applet {
 	
 	class CutListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			searchDeadCut();
 			treePointer = Integer.parseInt(cut.getName());
 			if (isDead[treePointer] == true && money >= 500) {
 				money -= 500;
@@ -195,14 +197,14 @@ public class H13_Final_02_Orchard extends Applet {
 				if (labor > 3 && Math.random() < 0.5) {
 					for (int i = 0; i < iSeason.length; i++) {
 						iSeason[i]++;
-						int rApple = (int)(Math.random()*13+2*(iSeason[treeCounter]%4));
+						int rApple = (int)(Math.random()*16+2*(iSeason[treeCounter]%4));
 						if (iSeason[treeCounter] > 20 && iSeason[treeCounter]%4 == 3) {appleBasket += rApple;}
 					}
 					sell.setText(""+ appleBasket);
 					appleEuro = (double)(int)((Math.random()+0.5)*1000)/1000;
+					labor = 0;
 					searchDeadCut();
 					repaint();
-					labor = 0;
 				}
 			}
 		}
@@ -210,6 +212,7 @@ public class H13_Final_02_Orchard extends Applet {
 	
 	class PlantListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			searchDeadCut();
 			treePointer = Integer.parseInt(plant.getName());
 			if (isCut[treePointer] == true && iSeason[treePointer]%4 == 1 && money >= 250) {
 				money -= 250;
@@ -225,6 +228,7 @@ public class H13_Final_02_Orchard extends Applet {
 	
 	class SellListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			searchDeadCut();
 			if (Integer.parseInt(sell.getText()) <= appleBasket) {
 				appleBasket -= Integer.parseInt(sell.getText());
 				money += Integer.parseInt(sell.getText())*appleEuro;
