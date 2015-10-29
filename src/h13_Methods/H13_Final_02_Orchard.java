@@ -22,7 +22,7 @@ public class H13_Final_02_Orchard extends Applet {
 	boolean[] isDead = new boolean[iSeason.length];
 	boolean[] isCut = new boolean[iSeason.length];
 	int appleBasket = 0;
-	double money = 0;
+	double money = 1500;
 	double appleEuro = 1.0;
 	int treePointer;
 	int labor;
@@ -174,7 +174,7 @@ public class H13_Final_02_Orchard extends Applet {
 			for (int i = 0; i < iSeason.length; i++) {
 				iSeason[i]++;
 				int rApple = (int)(Math.random()*16+2*(iSeason[treeCounter]%4));
-				if (iSeason[i] > 20 && iSeason[i]%4 == 3) {appleBasket += rApple;}
+				if (iSeason[i] > 20 && iSeason[i]%4 == 3 && isDead[i] == false && isCut[i] == false) {appleBasket += rApple;}
 			}
 			appleEuro = (double)(int)((Math.random()+0.5)*1000)/1000;
 			searchDeadCut();
@@ -198,7 +198,7 @@ public class H13_Final_02_Orchard extends Applet {
 					for (int i = 0; i < iSeason.length; i++) {
 						iSeason[i]++;
 						int rApple = (int)(Math.random()*16+2*(iSeason[treeCounter]%4));
-						if (iSeason[treeCounter] > 20 && iSeason[treeCounter]%4 == 3) {appleBasket += rApple;}
+						if (iSeason[treeCounter] > 20 && iSeason[treeCounter]%4 == 3 && isDead[i] == false && isCut[i] == false) {appleBasket += rApple;}
 					}
 					sell.setText(""+ appleBasket);
 					appleEuro = (double)(int)((Math.random()+0.5)*1000)/1000;
