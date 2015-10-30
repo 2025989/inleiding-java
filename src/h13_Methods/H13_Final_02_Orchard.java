@@ -23,6 +23,8 @@ public class H13_Final_02_Orchard extends Applet {
 	boolean[] isCut = new boolean[iSeason.length];
 	int appleBasket = 0;
 	double money = 1500;
+	int hiApple = 0;
+	double hiMoney = 0;
 	double appleEuro = (double)(int)((Math.random()+0.5)*1000)/1000;
 	int treePointer;
 	int labor;
@@ -57,7 +59,12 @@ public class H13_Final_02_Orchard extends Applet {
 			}
 			y -= rowHeight(x/2, y) + 10;
 		}
+		if (appleBasket > hiApple) {hiApple = appleBasket;}
+		if (money > hiMoney) {hiMoney = money;}
 		g.setColor(Color.black);
+		g.drawString("High score (apples): "+ hiApple, 40, 20);
+		if (hiMoney == (int) hiMoney) {g.drawString("High score (money): € "+ String.format("%.0f"+ ",-", hiMoney), 40, 40);}
+		else {g.drawString("High score (money): € "+ String.format("%.2f", hiMoney), 40, 40);}
 		g.drawString("Apples: "+ appleBasket, 40, 75);
 		if (money == (int) money) {g.drawString("Money: € "+ String.format("%.0f"+ ",-", money), 40, 100);}
 		else {g.drawString("Money: € "+ String.format("%.2f", money), 40, 100);}
