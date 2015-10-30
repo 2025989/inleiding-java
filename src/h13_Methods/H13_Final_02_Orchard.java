@@ -22,7 +22,7 @@ public class H13_Final_02_Orchard extends Applet {
 	boolean[] isDead = new boolean[iSeason.length];
 	boolean[] isCut = new boolean[iSeason.length];
 	int appleBasket = 0;
-	double money = 1500;
+	double money = 1500000000;
 	int hiApple = 0;
 	double hiMoney = 0;
 	double appleEuro = (double)(int)((Math.random()+0.5)*1000)/1000;
@@ -175,18 +175,23 @@ public class H13_Final_02_Orchard extends Applet {
 		sell.setText(""+ appleBasket);
 	}
 	
+	void time() {
+		searchDeadCut();
+		for (int i = 0; i < iSeason.length; i++) {
+			iSeason[i]++;
+			if (iSeason[i] > 20 && iSeason[i]%4 == 0 && isCut[i] == false && Math.random() < 0.05) {isDead[i] = true;}
+			int rApple = (int)(Math.random()*16+2*(iSeason[treeCounter]%4));
+			if (iSeason[i] > 20 && iSeason[i]%4 == 3 && isDead[i] == false && isCut[i] == false) {appleBasket += rApple;}
+		}
+		sell.setText(""+ appleBasket);
+		appleEuro = (double)(int)((Math.random()+0.5)*1000)/1000;
+		searchDeadCut();
+		repaint();
+	}
+	
 	class SeasonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			searchDeadCut();
-			for (int i = 0; i < iSeason.length; i++) {
-				iSeason[i]++;
-				if (iSeason[i] > 20 && iSeason[i]%4 == 0 && isCut[i] == false && Math.random() < 0.05) {isDead[i] = true;}
-				int rApple = (int)(Math.random()*16+2*(iSeason[treeCounter]%4));
-				if (iSeason[i] > 20 && iSeason[i]%4 == 3 && isDead[i] == false && isCut[i] == false) {appleBasket += rApple;}
-			}
-			appleEuro = (double)(int)((Math.random()+0.5)*1000)/1000;
-			searchDeadCut();
-			repaint();
+			time();
 		}
 	}
 	
@@ -199,21 +204,15 @@ public class H13_Final_02_Orchard extends Applet {
 				isDead[treePointer] = false;
 				isCut[treePointer] = true;
 				cut.setName("");
+				for (int i = 0; i < iSeason.length; i++) {
+					if (iSeason[i] > 20 && iSeason[i]%4 == 0 && isCut[i] == false && Math.random() < 0.05) {isDead[i] = true;}
+				}
 				searchDeadCut();
 				repaint();
 				labor++;
 				if (labor > 3 && Math.random() < 0.5) {
-					for (int i = 0; i < iSeason.length; i++) {
-						iSeason[i]++;
-						if (iSeason[i] > 20 && iSeason[i]%4 == 0 && isCut[i] == false && Math.random() < 0.05) {isDead[i] = true;}
-						int rApple = (int)(Math.random()*16+2*(iSeason[treeCounter]%4));
-						if (iSeason[treeCounter] > 20 && iSeason[treeCounter]%4 == 3 && isDead[i] == false && isCut[i] == false) {appleBasket += rApple;}
-					}
-					sell.setText(""+ appleBasket);
-					appleEuro = (double)(int)((Math.random()+0.5)*1000)/1000;
+					time();
 					labor = 0;
-					searchDeadCut();
-					repaint();
 				}
 			}
 		}
