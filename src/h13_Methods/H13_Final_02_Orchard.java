@@ -80,7 +80,6 @@ public class H13_Final_02_Orchard extends Applet {
 	
 	void drawTree(Graphics g, int x, int y) {
 		if (iSeason[treeCounter] <= 20) {d = d/20*iSeason[treeCounter];}
-		if (iSeason[treeCounter] > 20 && iSeason[treeCounter]%4 == 0 && isCut[treeCounter] == false && Math.random() < 0.05) {isDead[treeCounter] = true;}
 		if (isDead[treeCounter] == true) {
 			int[] xPoints = {x, (int)(x-d*3), (int)(x-d*2), (int)(x-d*11), (int)(x-d*1), x, (int)(x+d), (int)(x+d*11), (int)(x+d), (int)(x+d*3)};
 			int[] yPoints = {y, y, (int)(y-d*14), (int)(y-d*34), (int)(y-d*18), (int)(y-d*36), (int)(y-d*25), (int)(y-d*34), (int)(y-d*22), y};
@@ -181,6 +180,7 @@ public class H13_Final_02_Orchard extends Applet {
 			searchDeadCut();
 			for (int i = 0; i < iSeason.length; i++) {
 				iSeason[i]++;
+				if (iSeason[i] > 20 && iSeason[i]%4 == 0 && isCut[i] == false && Math.random() < 0.05) {isDead[i] = true;}
 				int rApple = (int)(Math.random()*16+2*(iSeason[treeCounter]%4));
 				if (iSeason[i] > 20 && iSeason[i]%4 == 3 && isDead[i] == false && isCut[i] == false) {appleBasket += rApple;}
 			}
@@ -205,6 +205,7 @@ public class H13_Final_02_Orchard extends Applet {
 				if (labor > 3 && Math.random() < 0.5) {
 					for (int i = 0; i < iSeason.length; i++) {
 						iSeason[i]++;
+						if (iSeason[i] > 20 && iSeason[i]%4 == 0 && isCut[i] == false && Math.random() < 0.05) {isDead[i] = true;}
 						int rApple = (int)(Math.random()*16+2*(iSeason[treeCounter]%4));
 						if (iSeason[treeCounter] > 20 && iSeason[treeCounter]%4 == 3 && isDead[i] == false && isCut[i] == false) {appleBasket += rApple;}
 					}
