@@ -3,6 +3,7 @@ package h13_Methods;
 import java.applet.Applet;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Label;
 import java.awt.TextField;
@@ -49,6 +50,7 @@ public class H13_Final_02_Orchard extends Applet {
 	}
 	
 	public void paint(Graphics g) {
+		g.setFont(new Font("Arial", Font.PLAIN, 14));
 		int x = getWidth();
 		int y = 700;
 		
@@ -62,14 +64,31 @@ public class H13_Final_02_Orchard extends Applet {
 		if (appleBasket > hiApple) {hiApple = appleBasket;}
 		if (money > hiMoney) {hiMoney = money;}
 		g.setColor(Color.black);
-		g.drawString("High score (apples): "+ hiApple, 40, 20);
-		if (hiMoney == (int) hiMoney) {g.drawString("High score (money): € "+ String.format("%.0f"+ ",-", hiMoney), 40, 40);}
-		else {g.drawString("High score (money): € "+ String.format("%.2f", hiMoney), 40, 40);}
-		g.drawString("Apples: "+ appleBasket, 40, 75);
-		if (money == (int) money) {g.drawString("Money: € "+ String.format("%.0f"+ ",-", money), 40, 100);}
-		else {g.drawString("Money: € "+ String.format("%.2f", money), 40, 100);}
-		g.drawString("Apple stock price: "+ String.format("%.3f", appleEuro) +" EUR", 40, 125);
+		g.drawString("High score (apples): "+ hiApple, 40, 60);
+		if (hiMoney == (int) hiMoney) {g.drawString("High score (money): € "+ String.format("%.0f"+ ",-", hiMoney), 40, 80);}
+		else {g.drawString("High score (money): € "+ String.format("%.2f", hiMoney), 40, 80);}
+		g.drawString("Apples: "+ appleBasket, 40, 115);
+		if (money == (int) money) {g.drawString("Money: € "+ String.format("%.0f"+ ",-", money), 40, 140);}
+		else {g.drawString("Money: € "+ String.format("%.2f", money), 40, 140);}
+		g.drawString("Apple stock price: "+ String.format("%.3f", appleEuro) +" EUR", 40, 165);
+		if (iSeason[0]%4 == 1) {g.drawString("Current season: Spring", x-200, 60);}
+		if (iSeason[0]%4 == 2) {g.drawString("Current season: Summer", x-200, 60);}
+		if (iSeason[0]%4 == 3) {g.drawString("Current season: Autumn", x-200, 60);}
+		if (iSeason[0]%4 == 0) {g.drawString("Current season: Winter", x-200, 60);}
 		treeCounter = 0;
+		gameOver(g);
+	}
+	
+	void gameOver(Graphics death) {
+		int decayCounter = 0;
+		for (int i = 0; i < iSeason.length; i++) {
+			if (isDead[i] == true || isCut[i] == true) {decayCounter++;}
+		}
+		if (decayCounter == iSeason.length && appleBasket == 0 && money < 250) {
+			death.setFont(new Font("Arial", Font.BOLD, 40));
+			death.setColor(Color.red);
+			death.drawString("GAME OVER", getWidth()/2-125, getHeight()/2-45);
+		}
 	}
 	
 	int rowHeight(int x, int y) {
