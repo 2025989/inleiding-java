@@ -88,6 +88,13 @@ public class H13_Final_02_Orchard extends Applet {
 		if ((decayCounter == iSeason.length && appleBasket == 0 && money < 250)
 		|| (isDeadCounter == iSeason.length && appleBasket == 0 && money < 500)) {
 			death.setFont(new Font("Arial", Font.BOLD, 40));
+			setBackground(new Color(255, 200, 200));
+			season.setBackground(new Color(255, 200, 200));
+			sellButton.setBackground(new Color(255, 200, 200));
+			sell.setBackground(new Color(255, 200, 200));
+			cut.setBackground(new Color(255, 200, 200));
+			plant.setBackground(new Color(255, 200, 200));
+			death.drawString("GAME OVER", getWidth()/2-123, getHeight()/2-43);
 			death.setColor(Color.red);
 			death.drawString("GAME OVER", getWidth()/2-125, getHeight()/2-45);
 		}
@@ -104,13 +111,13 @@ public class H13_Final_02_Orchard extends Applet {
 		if (isDead[treeCounter] == true) {
 			int[] xPoints = {x, (int)(x-d*3), (int)(x-d*2), (int)(x-d*11), (int)(x-d*1), x, (int)(x+d), (int)(x+d*11), (int)(x+d), (int)(x+d*3)};
 			int[] yPoints = {y, y, (int)(y-d*14), (int)(y-d*34), (int)(y-d*18), (int)(y-d*36), (int)(y-d*25), (int)(y-d*34), (int)(y-d*22), y};
-			g.setColor(new Color(105, 55, 25));
+			g.setColor(new Color(95, 55, 25));
 			g.fillPolygon(xPoints, yPoints, 10);
 		}
 		else if (isCut[treeCounter] == true) {
 			int[] xPoints = {x, (int)(x-d*3), (int)(x-d*2), (int)(x+d*2), (int)(x+d*3)};
 			int[] yPoints = {y, y, (int)(y-d*5), (int)(y-d*5), y};
-			g.setColor(new Color(105, 55, 25));
+			g.setColor(new Color(95, 55, 25));
 			g.fillPolygon(xPoints, yPoints, 5);
 		}
 		else {
