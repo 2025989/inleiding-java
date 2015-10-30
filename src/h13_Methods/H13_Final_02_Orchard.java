@@ -5,7 +5,6 @@ import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Label;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -81,10 +80,13 @@ public class H13_Final_02_Orchard extends Applet {
 	
 	void gameOver(Graphics death) {
 		int decayCounter = 0;
+		int isDeadCounter = 0;
 		for (int i = 0; i < iSeason.length; i++) {
 			if (isDead[i] == true || isCut[i] == true) {decayCounter++;}
+			if (isDead[i] == true) {isDeadCounter++;}
 		}
-		if (decayCounter == iSeason.length && appleBasket == 0 && money < 250) {
+		if ((decayCounter == iSeason.length && appleBasket == 0 && money < 250)
+		|| (isDeadCounter == iSeason.length && appleBasket == 0 && money < 500)) {
 			death.setFont(new Font("Arial", Font.BOLD, 40));
 			death.setColor(Color.red);
 			death.drawString("GAME OVER", getWidth()/2-125, getHeight()/2-45);
