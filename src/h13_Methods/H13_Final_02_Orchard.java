@@ -22,7 +22,7 @@ public class H13_Final_02_Orchard extends Applet {
 	boolean[] isDead = new boolean[iSeason.length];
 	boolean[] isCut = new boolean[iSeason.length];
 	int appleBasket = 0;
-	double money = 1500000000;
+	double money = 1500;
 	int hiApple = 0;
 	double hiMoney = 0;
 	double appleEuro = (double)(int)((Math.random()+0.5)*1000)/1000;
@@ -205,7 +205,7 @@ public class H13_Final_02_Orchard extends Applet {
 				isCut[treePointer] = true;
 				cut.setName("");
 				for (int i = 0; i < iSeason.length; i++) {
-					if (iSeason[i] > 20 && iSeason[i]%4 == 0 && isCut[i] == false && Math.random() < 0.05) {isDead[i] = true;}
+					if (iSeason[i] > 20 && iSeason[i]%4 == 0 && isCut[i] == false && Math.random() < 0.01) {isDead[i] = true;}
 				}
 				searchDeadCut();
 				repaint();
