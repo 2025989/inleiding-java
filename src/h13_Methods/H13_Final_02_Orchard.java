@@ -204,11 +204,12 @@ public class H13_Final_02_Orchard extends Applet {
 	}
 	
 	void time() {
+		labor = 0;
 		searchDeadCut();
 		for (int i = 0; i < iSeason.length; i++) {
 			iSeason[i]++;
 			if (iSeason[i] > 20 && iSeason[i]%4 == 0 && isCut[i] == false && Math.random() < 0.10) {isDead[i] = true;}
-			int rApple = (int)(Math.random()*24+4*(iSeason[treeCounter]%4));
+			int rApple = (int)(Math.random()*25+5*(iSeason[treeCounter]%4));
 			if (iSeason[i] > 20 && iSeason[i]%4 == 3 && isDead[i] == false && isCut[i] == false) {appleBasket += rApple;}
 		}
 		sell.setText(""+ appleBasket);
@@ -238,10 +239,7 @@ public class H13_Final_02_Orchard extends Applet {
 				searchDeadCut();
 				repaint();
 				labor++;
-				if (labor > 3 && Math.random() < 0.5) {
-					time();
-					labor = 0;
-				}
+				if (labor > 3 && Math.random() < 0.5) {time();}
 			}
 		}
 	}
