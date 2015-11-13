@@ -5,12 +5,14 @@ import java.awt.Button;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Label;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class H14_Final_TakeAway extends Applet {
 	
+	Label label = new Label("Take away gems (1-3):");
 	TextField input = new TextField("", 15);
 	Button ok = new Button("OK");
 	Button reset = new Button("Reset");
@@ -21,6 +23,7 @@ public class H14_Final_TakeAway extends Applet {
 	
 	public void init() {
 		setSize(500, 600);
+		add(label);
 		add(input);
 		input.addActionListener(new InputListener());
 		add(ok);
