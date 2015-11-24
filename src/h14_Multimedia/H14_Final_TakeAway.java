@@ -60,24 +60,27 @@ public class H14_Final_TakeAway extends Applet {
 	
 	class InputListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			int cpuGems = 0;
-			int inputInt = Integer.parseInt(input.getText());
-			if (inputInt >= 1 && inputInt <= 3) { //check for valid input
-				imgCount -= inputInt;
-				if (imgCount < 1) {lost = true;} //if you ended the game, you lost
-				if ((imgCount-1)%4 != 0) {
-					cpuGems = 1+((imgCount-1)%4-1);
-					imgCount -= cpuGems; //CPU is winning
+			if (won == false && lost == false) {
+				int cpuGems = 0;
+				int inputInt = Integer.parseInt(input.getText());
+				if (inputInt >= 1 && inputInt <= 3) { //check for valid input
+					imgCount -= inputInt;
+					if (imgCount < 1) {lost = true;} //if you ended the game, you lost
+					if ((imgCount-1)%4 != 0) {
+						cpuGems = 1+((imgCount-1)%4-1);
+						imgCount -= cpuGems; //CPU is winning
+					}
+					else {
+						cpuGems = (int)(Math.random()*3+1);
+						imgCount -= cpuGems; //CPU is losing
+					}
+					if (imgCount < 1 && lost == false) {won = true;} //if CPU ended the game, you won
+					if (cpuGems == 1) {displayText = "CPU took "+ cpuGems +" gem.";}
+					else {displayText = "CPU took "+ cpuGems +" gems.";}
 				}
-				else {
-					cpuGems = (int)(Math.random()*3+1);
-					imgCount -= cpuGems; //CPU is losing
-				}
-				if (imgCount < 1 && lost == false) {won = true;} //if CPU ended the game, you won
-				if (cpuGems == 1) {displayText = "CPU took "+ cpuGems +" gem.";}
-				else {displayText = "CPU took "+ cpuGems +" gems.";}
+				else {displayText = "Invalid input";}
 			}
-			else {displayText = "Invalid input";}
+			input.setText(" ");
 			input.setText("");
 			input.requestFocus();
 			repaint();
