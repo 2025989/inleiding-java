@@ -75,7 +75,7 @@ public class H14_02_DealCards extends Applet {
 				player4[iDeal] = dealCard();
 			}
 			repaint();
-			AudioClip doneSound = getAudioClip(getCodeBase(), "h14_Multimedia/Explosion.wav");
+			AudioClip doneSound = getAudioClip(getCodeBase(), "h14_Multimedia/prima.wav");
 			doneSound.play();
 		}
 	}
